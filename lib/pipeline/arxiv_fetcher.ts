@@ -72,3 +72,66 @@ export async function fetchDailyRAGPapers(maxResults: number = 20): Promise<Arxi
     return [];
   }
 }
+
+export async function fetchMonthlyRAGPapers(year: number, month: number, maxResults: number = 100): Promise<ArxivPaper[]> {
+  // Create date range for the month (YYYYMMDD format)
+  const startDate = `${year}${String(month).padStart(2, '0')}01`;
+  const lastDay = new Date(year, month, 0).getDate(); // Last day of the month
+  const endDate = `${year}${String(month).padStart(2, '0')}${lastDay}`;
+
+  // Query for RAG papers submitted in the specified month
+  const query = `cat:cs.CL AND (abs:RAG OR abs:"Retrieval-Augmented Generation") AND submittedDate:[${startDate} TO ${endDate}]`;
+  const sortBy = 'submittedDate';
+  const sortOrder = 'descending';
+
+  const url = `${BASE_URL}?search_query=${encodeURIComponent(query)}&start=0&max_results=${maxResults}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch from arXiv: ${response.statusText}`);
+    }
+
+    const xmlData = await response.text();
+    const parser = new XMLParser({
+      ignoreAttributes: false,
+      attributeNamePrefix: "@_"
+    });
+    const result = parser.parse(xmlData);
+
+    const entries = result.feed.entry;
+
+    if (!entries) return [];
+
+    const entriesArray = Array.isArray(entries) ? entries : [entries];
+
+    interface ArxivEntry {
+      id: string;
+      title: string;
+      summary: string;
+      author: { name: string } | { name: string }[];
+      published: string;
+      updated: string;
+      category: { '@_term': string } | { '@_term': string }[];
+    }
+
+    return entriesArray.map((entry: ArxivEntry) => ({
+      id: entry.id,
+      title: entry.title.replace(/\n/g, ' ').trim(),
+      summary: entry.summary.replace(/\n/g, ' ').trim(),
+      authors: Array.isArray(entry.author)
+        ? entry.author.map((a) => a.name)
+        : [entry.author.name],
+      published: entry.published,
+      updated: entry.updated,
+      link: entry.id,
+      category: Array.isArray(entry.category)
+        ? entry.category.map((c) => c['@_term'])
+        : [entry.category['@_term']]
+    }));
+
+  } catch (error) {
+    console.error("Error fetching monthly arXiv papers:", error);
+    return [];
+  }
+}

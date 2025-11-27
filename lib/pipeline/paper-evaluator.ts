@@ -106,7 +106,7 @@ export async function evaluatePaper(paper: ArxivPaper): Promise<PaperEvaluation>
    - "Other": その他
 
 【選定基準】
-総合スコア8以上、かつRAG関連性7以上のみを選定してください。
+総合スコア7以上、かつRAG関連性6以上のみを選定してください。
 「量より質」を重視し、本当に価値のある論文のみを選んでください。
 
 【出力形式】JSON
@@ -146,8 +146,8 @@ export async function evaluatePaper(paper: ArxivPaper): Promise<PaperEvaluation>
       result.practicalScore * 0.25
     );
 
-    // 選定基準: 総合8以上 かつ 関連性7以上
-    const shouldSelect = overallScore >= 8 && result.relevanceScore >= 7;
+    // 選定基準: 総合7以上 かつ 関連性6以上（緩和版）
+    const shouldSelect = overallScore >= 7 && result.relevanceScore >= 6;
 
     return {
       relevanceScore: result.relevanceScore,
