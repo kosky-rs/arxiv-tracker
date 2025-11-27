@@ -39,15 +39,15 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
 
   const scoreColor =
     paper.overallScore >= 9
-      ? 'from-yellow-400 to-orange-500'
+      ? 'bg-[#E51717]'
       : paper.overallScore >= 8
-      ? 'from-green-400 to-emerald-500'
-      : 'from-blue-400 to-cyan-500';
+      ? 'bg-green-500'
+      : 'bg-blue-500';
 
   return (
     <motion.article
       layout
-      className="bg-slate-900/50 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-700 transition-colors"
+      className="bg-white dark:bg-neutral-800 rounded-lg border overflow-hidden hover-lift"
     >
       {/* ヘッダー */}
       <div className="p-5">
@@ -67,20 +67,20 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                 {new Date(paper.published).toLocaleDateString('ja-JP')}
               </span>
             </div>
-            <h3 className="text-lg font-bold text-white leading-tight mb-2 line-clamp-2">
+            <h3 className="text-lg font-bold text-neutral-900 dark:text-white leading-tight mb-2 line-clamp-2">
               {paper.title}
             </h3>
             <div className="flex items-center gap-2 flex-wrap">
               {paper.institutions.slice(0, 2).map((inst) => (
                 <span
                   key={inst}
-                  className="flex items-center gap-1 text-xs text-slate-400 bg-slate-800/50 px-2 py-1 rounded-full"
+                  className="flex items-center gap-1 text-xs text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-700/50 px-2 py-1 rounded-full"
                 >
                   <Building2 className="h-3 w-3" />
                   {inst}
                 </span>
               ))}
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-neutral-500 dark:text-neutral-500">
                 {paper.authors.slice(0, 2).join(', ')}
                 {paper.authors.length > 2 && ` 他${paper.authors.length - 2}名`}
               </span>
@@ -91,13 +91,13 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
           <div className="flex flex-col items-center">
             <div
               className={cn(
-                'w-14 h-14 rounded-xl bg-gradient-to-br flex items-center justify-center',
+                'w-14 h-14 rounded-lg flex items-center justify-center',
                 scoreColor
               )}
             >
               <span className="text-2xl font-bold text-white">{paper.overallScore}</span>
             </div>
-            <span className="text-[10px] text-slate-500 mt-1">総合スコア</span>
+            <span className="text-[10px] text-neutral-500 dark:text-neutral-500 mt-1">総合スコア</span>
           </div>
         </div>
 
@@ -111,29 +111,29 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
           ].map(({ label, score, icon: Icon }) => (
             <div key={label} className="text-center">
               <div className="flex items-center justify-center gap-1 mb-1">
-                <Icon className="h-3 w-3 text-slate-500" />
-                <span className="text-xs text-slate-500">{label}</span>
+                <Icon className="h-3 w-3 text-neutral-500" />
+                <span className="text-xs text-neutral-600 dark:text-neutral-400">{label}</span>
               </div>
-              <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                  className="h-full bg-[#E51717] rounded-full"
                   style={{ width: `${score * 10}%` }}
                 />
               </div>
-              <span className="text-xs font-medium text-slate-400">{score}</span>
+              <span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">{score}</span>
             </div>
           ))}
         </div>
 
         {/* 要約 */}
-        <p className="text-sm text-slate-400 leading-relaxed line-clamp-2 mb-4">
+        <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed line-clamp-2 mb-4">
           {paper.scoreReasoning}
         </p>
 
         {/* 展開ボタン */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-800/50 hover:bg-slate-800 text-sm font-medium text-slate-300 transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-neutral-100 dark:bg-neutral-700/50 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-sm font-medium text-neutral-700 dark:text-neutral-300 transition-colors"
         >
           {isExpanded ? '詳細を閉じる' : '実装・ビジネス詳細を見る'}
           <ChevronDown
@@ -150,10 +150,10 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="border-t border-slate-800"
+            className="border-t"
           >
             {/* タブ */}
-            <div className="flex border-b border-slate-800">
+            <div className="flex border-b">
               {[
                 { id: 'blueprint', label: '実装ブループリント', icon: Zap },
                 { id: 'business', label: 'ビジネス分析', icon: Target },
@@ -165,8 +165,8 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                   className={cn(
                     'flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors',
                     activeTab === id
-                      ? 'text-blue-400 bg-blue-500/10 border-b-2 border-blue-400'
-                      : 'text-slate-500 hover:text-slate-300'
+                      ? 'text-[#E51717] bg-[#E51717]/10 border-b-2 border-[#E51717]'
+                      : 'text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
                   )}
                 >
                   <Icon className="h-4 w-4" />
@@ -180,10 +180,10 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
               {activeTab === 'blueprint' && paper.blueprint && (
                 <div className="space-y-4">
                   <div>
-                    <h4 className="text-sm font-semibold text-white mb-2">
+                    <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-2">
                       {paper.blueprint.title}
                     </h4>
-                    <p className="text-sm text-slate-400">{paper.blueprint.description}</p>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400">{paper.blueprint.description}</p>
                   </div>
 
                   <div className="flex flex-wrap gap-2">
@@ -203,18 +203,18 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                         ? '中級'
                         : '上級'}
                     </span>
-                    <span className="px-2 py-1 rounded text-xs bg-slate-800 text-slate-400">
+                    <span className="px-2 py-1 rounded text-xs bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400">
                       実装目安: {paper.blueprint.estimatedImplementationTime}
                     </span>
                   </div>
 
                   {/* コードスニペット */}
                   <div className="relative">
-                    <div className="flex items-center justify-between px-4 py-2 bg-slate-800 rounded-t-lg border-b border-slate-700">
-                      <span className="text-xs text-slate-400">{paper.blueprint.language}</span>
+                    <div className="flex items-center justify-between px-4 py-2 bg-neutral-100 dark:bg-neutral-800 rounded-t-lg border-b">
+                      <span className="text-xs text-neutral-600 dark:text-neutral-400">{paper.blueprint.language}</span>
                       <button
                         onClick={copyCode}
-                        className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
+                        className="flex items-center gap-1.5 text-xs text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
                       >
                         {copiedCode ? (
                           <>
@@ -229,8 +229,8 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                         )}
                       </button>
                     </div>
-                    <pre className="p-4 bg-slate-900 rounded-b-lg overflow-x-auto">
-                      <code className="text-sm text-slate-300 font-mono">
+                    <pre className="p-4 bg-neutral-50 dark:bg-neutral-900 rounded-b-lg overflow-x-auto">
+                      <code className="text-sm text-neutral-800 dark:text-neutral-300 font-mono">
                         {paper.blueprint.codeSnippet}
                       </code>
                     </pre>
@@ -239,12 +239,12 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                   {/* 必要ライブラリ */}
                   {paper.blueprint.prerequisites?.length > 0 && (
                     <div>
-                      <h5 className="text-xs font-medium text-slate-500 mb-2">必要ライブラリ</h5>
+                      <h5 className="text-xs font-medium text-neutral-500 mb-2">必要ライブラリ</h5>
                       <div className="flex flex-wrap gap-2">
                         {paper.blueprint.prerequisites.map((lib) => (
                           <span
                             key={lib}
-                            className="px-2 py-1 rounded bg-slate-800 text-xs text-slate-400 font-mono"
+                            className="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-xs text-neutral-600 dark:text-neutral-400 font-mono"
                           >
                             {lib}
                           </span>
@@ -256,11 +256,11 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                   {/* 重要ポイント */}
                   {paper.blueprint.keyInsights?.length > 0 && (
                     <div>
-                      <h5 className="text-xs font-medium text-slate-500 mb-2">技術的ポイント</h5>
+                      <h5 className="text-xs font-medium text-neutral-500 mb-2">技術的ポイント</h5>
                       <ul className="space-y-1">
                         {paper.blueprint.keyInsights.map((insight, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
-                            <Lightbulb className="h-4 w-4 text-yellow-500 shrink-0 mt-0.5" />
+                          <li key={i} className="flex items-start gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+                            <Lightbulb className="h-4 w-4 text-[#E51717] shrink-0 mt-0.5" />
                             {insight}
                           </li>
                         ))}
@@ -273,15 +273,15 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
               {activeTab === 'business' && paper.businessAnalysis && (
                 <div className="space-y-4">
                   <div>
-                    <h4 className="text-sm font-semibold text-white mb-2">価値提案</h4>
-                    <p className="text-sm text-slate-400">
+                    <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-2">価値提案</h4>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400">
                       {paper.businessAnalysis.valueProposition}
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <h5 className="text-xs font-medium text-slate-500 mb-2">ターゲット業界</h5>
+                      <h5 className="text-xs font-medium text-neutral-500 mb-2">ターゲット業界</h5>
                       <div className="flex flex-wrap gap-2">
                         {paper.businessAnalysis.targetIndustries?.map((ind) => (
                           <span
@@ -294,7 +294,7 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                       </div>
                     </div>
                     <div>
-                      <h5 className="text-xs font-medium text-slate-500 mb-2">ROIポテンシャル</h5>
+                      <h5 className="text-xs font-medium text-neutral-500 mb-2">ROIポテンシャル</h5>
                       <span
                         className={cn(
                           'px-3 py-1.5 rounded-lg text-sm font-medium',
@@ -316,18 +316,18 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
 
                   {paper.businessAnalysis.roiReasoning && (
                     <div>
-                      <h5 className="text-xs font-medium text-slate-500 mb-2">ROI根拠</h5>
-                      <p className="text-sm text-slate-400">{paper.businessAnalysis.roiReasoning}</p>
+                      <h5 className="text-xs font-medium text-neutral-500 mb-2">ROI根拠</h5>
+                      <p className="text-sm text-neutral-600 dark:text-neutral-400">{paper.businessAnalysis.roiReasoning}</p>
                     </div>
                   )}
 
                   {paper.businessAnalysis.useCases?.length > 0 && (
                     <div>
-                      <h5 className="text-xs font-medium text-slate-500 mb-2">ユースケース</h5>
+                      <h5 className="text-xs font-medium text-neutral-500 mb-2">ユースケース</h5>
                       <ul className="space-y-1">
                         {paper.businessAnalysis.useCases.map((uc, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
-                            <Target className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
+                          <li key={i} className="flex items-start gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+                            <Target className="h-4 w-4 text-[#E51717] shrink-0 mt-0.5" />
                             {uc}
                           </li>
                         ))}
@@ -337,10 +337,10 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
 
                   {paper.businessAnalysis.risks?.length > 0 && (
                     <div>
-                      <h5 className="text-xs font-medium text-slate-500 mb-2">導入リスク</h5>
+                      <h5 className="text-xs font-medium text-neutral-500 mb-2">導入リスク</h5>
                       <ul className="space-y-1">
                         {paper.businessAnalysis.risks.map((risk, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-orange-400">
+                          <li key={i} className="flex items-start gap-2 text-sm text-orange-600 dark:text-orange-400">
                             <span className="shrink-0">⚠️</span>
                             {risk}
                           </li>
@@ -354,15 +354,15 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
               {activeTab === 'checklist' && paper.implementationChecklist && (
                 <div className="space-y-4">
                   <div className="flex flex-wrap gap-4 mb-4">
-                    <div className="px-4 py-3 rounded-xl bg-slate-800/50">
-                      <span className="text-xs text-slate-500 block">総工数目安</span>
-                      <span className="text-sm font-medium text-white">
+                    <div className="px-4 py-3 rounded-lg bg-neutral-100 dark:bg-neutral-700/50">
+                      <span className="text-xs text-neutral-500 block">総工数目安</span>
+                      <span className="text-sm font-medium text-neutral-900 dark:text-white">
                         {paper.implementationChecklist.estimatedTotalEffort || '未設定'}
                       </span>
                     </div>
-                    <div className="px-4 py-3 rounded-xl bg-slate-800/50">
-                      <span className="text-xs text-slate-500 block">推奨チームサイズ</span>
-                      <span className="text-sm font-medium text-white">
+                    <div className="px-4 py-3 rounded-lg bg-neutral-100 dark:bg-neutral-700/50">
+                      <span className="text-xs text-neutral-500 block">推奨チームサイズ</span>
+                      <span className="text-sm font-medium text-neutral-900 dark:text-white">
                         {paper.implementationChecklist.recommendedTeamSize || '未設定'}
                       </span>
                     </div>
@@ -373,7 +373,7 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                       {paper.implementationChecklist.items.map((item, i) => (
                         <div
                           key={i}
-                          className="flex items-start gap-3 p-3 rounded-lg bg-slate-800/30"
+                          className="flex items-start gap-3 p-3 rounded-lg bg-neutral-100 dark:bg-neutral-700/30"
                         >
                           <div
                             className={cn(
@@ -393,11 +393,11 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs text-slate-500">{item.category}</span>
+                              <span className="text-xs text-neutral-500">{item.category}</span>
                             </div>
-                            <p className="text-sm font-medium text-white">{item.task}</p>
+                            <p className="text-sm font-medium text-neutral-900 dark:text-white">{item.task}</p>
                             {item.details && (
-                              <p className="text-xs text-slate-500 mt-1">{item.details}</p>
+                              <p className="text-xs text-neutral-500 mt-1">{item.details}</p>
                             )}
                           </div>
                         </div>
@@ -414,7 +414,7 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                 href={paper.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-slate-700 text-sm text-slate-400 hover:text-white hover:border-slate-600 transition-colors"
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
               >
                 <ExternalLink className="h-4 w-4" />
                 arXivで論文を読む

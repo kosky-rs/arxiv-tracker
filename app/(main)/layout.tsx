@@ -3,9 +3,9 @@ import { MobileNav } from '@/components/layout/mobile-nav';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-white dark:bg-neutral-900">
       <Header />
-      <main className="pb-20 md:pb-0">{children}</main>
+      <main className="pb-20 md:pb-8">{children}</main>
       <MobileNav />
     </div>
   );

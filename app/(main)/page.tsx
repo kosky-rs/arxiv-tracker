@@ -96,30 +96,25 @@ export default async function DashboardPage() {
   const data = await getDashboardData();
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* ヒーローセクション */}
-      <section className="mb-12">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 border border-slate-800 p-8 md:p-12">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+    <div className="min-h-screen">
+      {/* Hero Section - Flux inspired */}
+      <section className="relative overflow-hidden border-b bg-gradient-to-br from-white via-neutral-50 to-white dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-900">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
-          <div className="relative">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-yellow-400">✨</span>
-              <span className="text-sm font-medium text-yellow-400">
-                AIエンジニア・コンサルタント向け
-              </span>
+        <div className="container relative mx-auto px-4 md:px-6 py-16 md:py-24">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E51717]/10 border border-[#E51717]/20 mb-6">
+              <span className="w-2 h-2 rounded-full bg-[#E51717]"></span>
+              <span className="text-sm font-medium text-[#E51717]">AIエンジニア・コンサルタント向け</span>
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6">
               最先端RAG研究の
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-                ナレッジハブ
-              </span>
+              <span className="text-[#E51717]">ナレッジハブ</span>
             </h1>
 
-            <p className="text-lg text-slate-400 mb-8 max-w-2xl">
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
               arXivから毎日自動で論文を収集し、AIが厳選。
               実装ブループリント・ビジネス分析・導入チェックリストを即座に取得できます。
             </p>
@@ -127,14 +122,14 @@ export default async function DashboardPage() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/papers"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#E51717] hover:bg-[#cc1414] text-white font-medium rounded-lg transition-colors shadow-sm"
               >
                 論文を探索する
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/digest"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-xl transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white font-medium rounded-lg border transition-colors"
               >
                 <FileText className="h-4 w-4" />
                 週次ダイジェストを見る
@@ -144,115 +139,121 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* 統計カード */}
-      <section className="mb-12">
-        <h2 className="text-xl font-bold text-white mb-6">ダッシュボード概要</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatsCard
-            title="スキャン済み論文"
-            value={data.totalPapers}
-            subtitle="arXivから取得"
-            iconName="BookOpen"
-            color="blue"
-          />
-          <StatsCard
-            title="厳選論文"
-            value={data.selectedPapers}
-            subtitle={`選定率 ${data.selectionRate}%`}
-            iconName="Sparkles"
-            color="purple"
-          />
-          <StatsCard
-            title="最もアクティブ"
-            value={data.mostActiveComponent}
-            subtitle="今月のトレンド"
-            iconName="TrendingUp"
-            color="green"
-          />
-          <StatsCard
-            title="毎日更新"
-            value="9:00"
-            subtitle="JST自動取得"
-            iconName="Calendar"
-            color="orange"
-          />
-        </div>
-      </section>
+      <div className="container mx-auto px-4 md:px-6 py-12">
+        {/* Stats Section */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6 accent-border pl-4">概要</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <StatsCard
+              title="スキャン済み論文"
+              value={data.totalPapers}
+              subtitle="arXivから取得"
+              iconName="BookOpen"
+              color="blue"
+            />
+            <StatsCard
+              title="厳選論文"
+              value={data.selectedPapers}
+              subtitle={`選定率 ${data.selectionRate}%`}
+              iconName="Sparkles"
+              color="purple"
+            />
+            <StatsCard
+              title="最もアクティブ"
+              value={data.mostActiveComponent}
+              subtitle="今月のトレンド"
+              iconName="TrendingUp"
+              color="green"
+            />
+            <StatsCard
+              title="毎日更新"
+              value="9:00"
+              subtitle="JST自動取得"
+              iconName="Calendar"
+              color="orange"
+            />
+          </div>
+        </section>
 
-      {/* 3つの価値訴求 */}
-      <section className="mb-12">
-        <h2 className="text-xl font-bold text-white mb-6">このツールで得られる価値</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20">
-            <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-4">
-              <Zap className="h-6 w-6 text-blue-400" />
+        {/* Value Proposition */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6 accent-border pl-4">
+            このツールで得られる価値
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-lg border bg-white dark:bg-neutral-800 hover-lift">
+              <div className="w-12 h-12 rounded-lg bg-[#E51717]/10 flex items-center justify-center mb-4">
+                <Zap className="h-6 w-6 text-[#E51717]" />
+              </div>
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
+                即座に使える実装ブループリント
+              </h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                論文の手法をPython/LangChainコードに変換。
+                コピペで動く実装例と必要ライブラリを提供。
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">
-              即座に使える実装ブループリント
-            </h3>
-            <p className="text-sm text-slate-400">
-              論文の手法をPython/LangChainコードに変換。
-              コピペで動く実装例と必要ライブラリを提供。
-            </p>
-          </div>
 
-          <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20">
-            <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-4">
-              <Target className="h-6 w-6 text-purple-400" />
+            <div className="p-6 rounded-lg border bg-white dark:bg-neutral-800 hover-lift">
+              <div className="w-12 h-12 rounded-lg bg-[#E51717]/10 flex items-center justify-center mb-4">
+                <Target className="h-6 w-6 text-[#E51717]" />
+              </div>
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
+                コンサル資料に使えるビジネス分析
+              </h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                ターゲット業界・ROIポテンシャル・導入リスクを自動分析。
+                クライアントへの提案資料作成を加速。
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">
-              コンサル資料に使えるビジネス分析
-            </h3>
-            <p className="text-sm text-slate-400">
-              ターゲット業界・ROIポテンシャル・導入リスクを自動分析。
-              クライアントへの提案資料作成を加速。
-            </p>
-          </div>
 
-          <div className="p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
-            <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center mb-4">
-              <FileText className="h-6 w-6 text-green-400" />
+            <div className="p-6 rounded-lg border bg-white dark:bg-neutral-800 hover-lift">
+              <div className="w-12 h-12 rounded-lg bg-[#E51717]/10 flex items-center justify-center mb-4">
+                <FileText className="h-6 w-6 text-[#E51717]" />
+              </div>
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
+                導入前チェックリストを自動生成
+              </h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                新手法を自社に導入する際の必須タスクを優先度付きで整理。
+                工数見積もりとチームサイズも提案。
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">
-              導入前チェックリストを自動生成
-            </h3>
-            <p className="text-sm text-slate-400">
-              新手法を自社に導入する際の必須タスクを優先度付きで整理。
-              工数見積もりとチームサイズも提案。
-            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 最新の厳選論文 */}
-      <section>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-white">最新の厳選論文</h2>
-          <Link
-            href="/papers"
-            className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1"
-          >
-            すべて見る
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
+        {/* Latest Papers */}
+        <section>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-white accent-border pl-4">
+              最新の厳選論文
+            </h2>
+            <Link
+              href="/papers"
+              className="text-sm text-[#E51717] hover:text-[#cc1414] flex items-center gap-1 font-medium"
+            >
+              すべて見る
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
 
-        {data.recentPapers.length > 0 ? (
-          <div className="space-y-6">
-            {data.recentPapers.map((paper) => (
-              <PaperCard key={paper.id} paper={paper} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16 rounded-2xl bg-slate-900/50 border border-slate-800">
-            <BookOpen className="h-12 w-12 text-slate-600 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-white mb-2">まだ論文がありません</h3>
-            <p className="text-sm text-slate-500 mb-6">
-              日次バッチが実行されると、厳選された論文がここに表示されます。
-            </p>
-          </div>
-        )}
-      </section>
+          {data.recentPapers.length > 0 ? (
+            <div className="space-y-6">
+              {data.recentPapers.map((paper) => (
+                <PaperCard key={paper.id} paper={paper} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 rounded-lg border bg-white dark:bg-neutral-800">
+              <BookOpen className="h-12 w-12 text-neutral-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">まだ論文がありません</h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
+                日次バッチが実行されると、厳選された論文がここに表示されます。
+              </p>
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 }
