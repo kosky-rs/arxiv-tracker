@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// 論文テーブル
+model Paper {
+  id            String   @id // arXiv ID
+  title         String
+  summary       String   @db.Text
+  authors       String[] // 著者名リスト
+  institutions  String[] // 所属機関リスト
+  published     DateTime
+  updated       DateTime
+  link          String
+  categories    String[] // arXivカテゴリ
+
+  // 評価スコア
+  relevanceScore   Int      // 関連性 0-10
+  noveltyScore     Int      // 新規性 0-10
+  authorityScore   Int      // 著者権威性 0-10
+  practicalScore   Int      // 実用性 0-10
+  overallScore     Int      // 総合スコア 0-10
+  scoreReasoning   String   @db.Text // スコアリング理由
+
+  // RAGコンポーネント分類
+  ragComponent     String   // Chunking, Embedding, Retrieval, Reranking, Generation, Orchestration
+
+  // 抽出されたナレッジ
+  blueprint        Json     // 実装ブループリント
+  businessAnalysis Json     // ビジネス分析
+  implementationChecklist Json // 実装チェックリスト
+
+  // メタデータ
+  isSelected    Boolean  @default(false) // 選定されたか
+  fetchedAt     DateTime @default(now())
+  processedAt   DateTime?
+
+  // 週次ダイジェスト用
+  weeklyDigests WeeklyDigestPaper[]
+
+  @@index([published])
+  @@index([overallScore])
+  @@index([ragComponent])
+  @@index([isSelected])
+}
+
+// 週次ダイジェスト
+model WeeklyDigest {
+  id          String   @id @default(cuid())
+  weekStart   DateTime
+  weekEnd     DateTime
+  title       String
+  summary     String   @db.Text // 週のハイライトサマリー
+  trendAnalysis String @db.Text // トレンド分析
+  papers      WeeklyDigestPaper[]
+  generatedAt DateTime @default(now())
+
+  @@unique([weekStart, weekEnd])
+  @@index([weekStart])
+}
+
+// ダイジェストと論文の中間テーブル
+model WeeklyDigestPaper {
+  id           String       @id @default(cuid())
+  digest       WeeklyDigest @relation(fields: [digestId], references: [id], onDelete: Cascade)
+  digestId     String
+  paper        Paper        @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  paperId      String
+  highlight    String       @db.Text // この論文のハイライト
+
+  @@unique([digestId, paperId])
+}
+
+// トレンド統計（キャッシュ用）
+model TrendStats {
+  id           String   @id @default(cuid())
+  period       String   // daily, weekly, monthly
+  periodStart  DateTime
+  ragComponent String
+  paperCount   Int
+  avgScore     Float
+  topKeywords  String[] // よく出現するキーワード
+  updatedAt    DateTime @default(now())
+
+  @@unique([period, periodStart, ragComponent])
+  @@index([period, periodStart])
+}

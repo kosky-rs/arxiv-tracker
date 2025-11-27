@@ -42,18 +42,28 @@ export async function fetchDailyRAGPapers(maxResults: number = 20): Promise<Arxi
     // Handle case where there is only one entry (parser might return object instead of array)
     const entriesArray = Array.isArray(entries) ? entries : [entries];
 
-    return entriesArray.map((entry: any) => ({
+    interface ArxivEntry {
+      id: string;
+      title: string;
+      summary: string;
+      author: { name: string } | { name: string }[];
+      published: string;
+      updated: string;
+      category: { '@_term': string } | { '@_term': string }[];
+    }
+
+    return entriesArray.map((entry: ArxivEntry) => ({
       id: entry.id,
       title: entry.title.replace(/\n/g, ' ').trim(),
       summary: entry.summary.replace(/\n/g, ' ').trim(),
-      authors: Array.isArray(entry.author) 
-        ? entry.author.map((a: any) => a.name) 
+      authors: Array.isArray(entry.author)
+        ? entry.author.map((a) => a.name)
         : [entry.author.name],
       published: entry.published,
       updated: entry.updated,
       link: entry.id, // arXiv ID is the URL usually
       category: Array.isArray(entry.category)
-        ? entry.category.map((c: any) => c['@_term'])
+        ? entry.category.map((c) => c['@_term'])
         : [entry.category['@_term']]
     }));
 
