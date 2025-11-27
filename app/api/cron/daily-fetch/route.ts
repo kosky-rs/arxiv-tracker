@@ -17,8 +17,8 @@ export async function GET(request: NextRequest) {
   try {
     console.log('📚 日次論文取得バッチ開始...');
 
-    // 1. arXivから最新論文を取得（多めに取得して厳選）
-    const papers = await fetchDailyRAGPapers(30);
+    // 1. arXivから最新論文を取得（無料枠対策のため15論文に制限）
+    const papers = await fetchDailyRAGPapers(15);
     console.log(`取得した論文数: ${papers.length}`);
 
     if (papers.length === 0) {

@@ -6,7 +6,7 @@ if (!process.env.GEMINI_API_KEY) {
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-export function getGeminiModel(modelName: string = 'gemini-1.5-flash'): GenerativeModel {
+export function getGeminiModel(modelName: string = 'gemini-2.5-flash'): GenerativeModel {
   return genAI.getGenerativeModel({ model: modelName });
 }
 
@@ -14,7 +14,7 @@ export async function generateJSON<T>(
   prompt: string,
   systemPrompt?: string
 ): Promise<T> {
-  const model = getGeminiModel('gemini-1.5-flash');
+  const model = getGeminiModel('gemini-2.5-flash');
 
   const fullPrompt = systemPrompt
     ? `${systemPrompt}\n\n${prompt}\n\nRespond with valid JSON only, no markdown code blocks.`
@@ -37,7 +37,7 @@ export async function generateText(
   prompt: string,
   systemPrompt?: string
 ): Promise<string> {
-  const model = getGeminiModel('gemini-1.5-flash');
+  const model = getGeminiModel('gemini-2.5-flash');
 
   const fullPrompt = systemPrompt
     ? `${systemPrompt}\n\n${prompt}`
