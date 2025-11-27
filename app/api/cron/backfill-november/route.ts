@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchMonthlyRAGPapers } from '@/lib/pipeline/arxiv_fetcher';
+import { fetchDateRangeRAGPapers } from '@/lib/pipeline/arxiv_fetcher';
 import { evaluatePaper } from '@/lib/pipeline/paper-evaluator';
 import { extractKnowledge } from '@/lib/pipeline/knowledge-extractor';
 import { prisma } from '@/lib/db';
@@ -14,11 +14,11 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    console.log('[Backfill November] Starting backfill for November 2025...');
+    console.log('[Backfill November] Starting backfill for Nov 25-27, 2025...');
 
-    // Fetch papers from November 2025
-    const papers = await fetchMonthlyRAGPapers(2025, 11, 100); // Get up to 100 papers
-    console.log(`[Backfill November] Fetched ${papers.length} papers from November 2025`);
+    // Fetch papers from Nov 25-27, 2025 (3 days only to reduce scope)
+    const papers = await fetchDateRangeRAGPapers('20251125', '20251127', 50);
+    console.log(`[Backfill November] Fetched ${papers.length} papers from Nov 25-27, 2025`);
 
     let evaluated = 0;
     let selected = 0;

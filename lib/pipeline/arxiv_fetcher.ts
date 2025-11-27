@@ -73,13 +73,9 @@ export async function fetchDailyRAGPapers(maxResults: number = 20): Promise<Arxi
   }
 }
 
-export async function fetchMonthlyRAGPapers(year: number, month: number, maxResults: number = 100): Promise<ArxivPaper[]> {
-  // Create date range for the month (YYYYMMDD format)
-  const startDate = `${year}${String(month).padStart(2, '0')}01`;
-  const lastDay = new Date(year, month, 0).getDate(); // Last day of the month
-  const endDate = `${year}${String(month).padStart(2, '0')}${lastDay}`;
-
-  // Query for RAG papers submitted in the specified month
+export async function fetchDateRangeRAGPapers(startDate: string, endDate: string, maxResults: number = 100): Promise<ArxivPaper[]> {
+  // Date format: YYYYMMDD (e.g., 20251125)
+  // Query for RAG papers submitted in the specified date range
   const query = `cat:cs.CL AND (abs:RAG OR abs:"Retrieval-Augmented Generation") AND submittedDate:[${startDate} TO ${endDate}]`;
   const sortBy = 'submittedDate';
   const sortOrder = 'descending';
@@ -131,7 +127,7 @@ export async function fetchMonthlyRAGPapers(year: number, month: number, maxResu
     }));
 
   } catch (error) {
-    console.error("Error fetching monthly arXiv papers:", error);
+    console.error("Error fetching date range arXiv papers:", error);
     return [];
   }
 }
