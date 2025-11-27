@@ -14,10 +14,10 @@ export function ComponentFilter({ selected, onChange }: ComponentFilterProps) {
       <button
         onClick={() => onChange(null)}
         className={cn(
-          'px-4 py-2 rounded-xl text-sm font-medium transition-all',
+          'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
           selected === null
-            ? 'bg-white text-slate-900'
-            : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-800'
+            ? 'bg-[#0066FF] dark:bg-[#3D8BFF] text-white shadow-md shadow-blue-500/30'
+            : 'bg-white dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border hover:text-neutral-900 dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-600'
         )}
       >
         すべて
@@ -27,10 +27,10 @@ export function ComponentFilter({ selected, onChange }: ComponentFilterProps) {
           key={component.id}
           onClick={() => onChange(component.id)}
           className={cn(
-            'px-4 py-2 rounded-xl text-sm font-medium transition-all',
+            'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
             selected === component.id
-              ? cn(component.color, 'text-white')
-              : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-800'
+              ? cn(component.color, 'text-white shadow-md')
+              : 'bg-white dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border hover:text-neutral-900 dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-600'
           )}
         >
           {component.label}
