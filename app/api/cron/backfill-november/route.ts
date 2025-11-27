@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
             title: paper.title,
             summary: paper.summary,
             authors: paper.authors,
-            institutions: knowledge.institutions || [],
+            institutions: evaluation.institutions,
             published: new Date(paper.published),
             updated: new Date(paper.updated),
             link: paper.link,
