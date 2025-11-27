@@ -14,11 +14,11 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    console.log('[Backfill November] Starting backfill for Nov 25-27, 2025...');
+    console.log('[Backfill November] Starting backfill for Nov 25-27, 2024...');
 
-    // Fetch papers from Nov 25-27, 2025 (3 days only to reduce scope)
-    const papers = await fetchDateRangeRAGPapers('20251125', '20251127', 50);
-    console.log(`[Backfill November] Fetched ${papers.length} papers from Nov 25-27, 2025`);
+    // Fetch papers from Nov 25-27, 2024 (3 days only to reduce scope)
+    const papers = await fetchDateRangeRAGPapers('20241125', '20241127', 50);
+    console.log(`[Backfill November] Fetched ${papers.length} papers from Nov 25-27, 2024`);
 
     let evaluated = 0;
     let selected = 0;
