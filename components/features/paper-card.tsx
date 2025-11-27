@@ -39,10 +39,10 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
 
   const scoreColor =
     paper.overallScore >= 9
-      ? 'bg-[#E51717]'
+      ? 'bg-[#0066FF] shadow-lg shadow-blue-500/50'
       : paper.overallScore >= 8
-      ? 'bg-green-500'
-      : 'bg-blue-500';
+      ? 'bg-green-500 shadow-lg shadow-green-500/50'
+      : 'bg-blue-400 shadow-lg shadow-blue-400/50';
 
   return (
     <motion.article
@@ -116,7 +116,7 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
               </div>
               <div className="h-1.5 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#E51717] rounded-full"
+                  className="h-full bg-gradient-to-r from-[#0066FF] to-[#0693e3] rounded-full transition-all duration-500"
                   style={{ width: `${score * 10}%` }}
                 />
               </div>
@@ -133,11 +133,11 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
         {/* 展開ボタン */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-neutral-100 dark:bg-neutral-700/50 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-sm font-medium text-neutral-700 dark:text-neutral-300 transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-neutral-100 dark:bg-neutral-700/50 hover:bg-[#0066FF]/10 dark:hover:bg-[#0066FF]/20 hover:text-[#0066FF] dark:hover:text-[#3D8BFF] text-sm font-medium text-neutral-700 dark:text-neutral-300 transition-all duration-200 group"
         >
           {isExpanded ? '詳細を閉じる' : '実装・ビジネス詳細を見る'}
           <ChevronDown
-            className={cn('h-4 w-4 transition-transform', isExpanded && 'rotate-180')}
+            className={cn('h-4 w-4 transition-transform duration-300', isExpanded && 'rotate-180')}
           />
         </button>
       </div>
@@ -163,9 +163,9 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                   key={id}
                   onClick={() => setActiveTab(id as typeof activeTab)}
                   className={cn(
-                    'flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors',
+                    'flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-all duration-200',
                     activeTab === id
-                      ? 'text-[#E51717] bg-[#E51717]/10 border-b-2 border-[#E51717]'
+                      ? 'text-[#0066FF] dark:text-[#3D8BFF] bg-[#0066FF]/10 border-b-2 border-[#0066FF] dark:border-[#3D8BFF]'
                       : 'text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
                   )}
                 >
@@ -260,7 +260,7 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                       <ul className="space-y-1">
                         {paper.blueprint.keyInsights.map((insight, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm text-neutral-600 dark:text-neutral-400">
-                            <Lightbulb className="h-4 w-4 text-[#E51717] shrink-0 mt-0.5" />
+                            <Lightbulb className="h-4 w-4 text-[#0066FF] dark:text-[#3D8BFF] shrink-0 mt-0.5" />
                             {insight}
                           </li>
                         ))}
@@ -327,7 +327,7 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
                       <ul className="space-y-1">
                         {paper.businessAnalysis.useCases.map((uc, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm text-neutral-600 dark:text-neutral-400">
-                            <Target className="h-4 w-4 text-[#E51717] shrink-0 mt-0.5" />
+                            <Target className="h-4 w-4 text-[#0066FF] dark:text-[#3D8BFF] shrink-0 mt-0.5" />
                             {uc}
                           </li>
                         ))}

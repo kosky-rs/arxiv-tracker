@@ -62,7 +62,7 @@ export default function PapersPage() {
               placeholder="論文タイトル、著者、キーワードで検索..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white dark:bg-neutral-800 border rounded-lg text-neutral-900 dark:text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#E51717] focus:ring-1 focus:ring-[#E51717]"
+              className="w-full pl-12 pr-4 py-3 bg-white dark:bg-neutral-800 border rounded-lg text-neutral-900 dark:text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#0066FF] dark:focus:border-[#3D8BFF] focus:ring-2 focus:ring-[#0066FF]/20 dark:focus:ring-[#3D8BFF]/20 transition-all duration-200"
             />
           </div>
           <button
@@ -89,7 +89,7 @@ export default function PapersPage() {
       {/* 論文リスト */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-8 w-8 text-[#E51717] animate-spin" />
+          <Loader2 className="h-8 w-8 text-[#0066FF] dark:text-[#3D8BFF] animate-spin" />
         </div>
       ) : filteredPapers.length > 0 ? (
         <div className="space-y-6">

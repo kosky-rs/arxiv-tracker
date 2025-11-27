@@ -103,15 +103,15 @@ export default async function DashboardPage() {
 
         <div className="container relative mx-auto px-4 md:px-6 py-16 md:py-24">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E51717]/10 border border-[#E51717]/20 mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#E51717]"></span>
-              <span className="text-sm font-medium text-[#E51717]">AIエンジニア・コンサルタント向け</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0066FF]/10 border border-[#0066FF]/20 mb-6 animate-fade-in">
+              <span className="w-2 h-2 rounded-full bg-[#0066FF] animate-pulse-blue"></span>
+              <span className="text-sm font-medium text-[#0066FF] dark:text-[#3D8BFF]">AIエンジニア・コンサルタント向け</span>
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6 animate-fade-in-up">
               最先端RAG研究の
               <br />
-              <span className="text-[#E51717]">ナレッジハブ</span>
+              <span className="text-[#0066FF] dark:text-[#3D8BFF]">ナレッジハブ</span>
             </h1>
 
             <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
@@ -119,13 +119,13 @@ export default async function DashboardPage() {
               実装ブループリント・ビジネス分析・導入チェックリストを即座に取得できます。
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 animate-slide-in-right">
               <Link
                 href="/papers"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#E51717] hover:bg-[#cc1414] text-white font-medium rounded-lg transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#0066FF] hover:bg-[#0052CC] text-white font-medium rounded-lg transition-all duration-300 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-0.5"
               >
                 論文を探索する
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href="/digest"
@@ -181,9 +181,9 @@ export default async function DashboardPage() {
             このツールで得られる価値
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-lg border bg-white dark:bg-neutral-800 hover-lift">
-              <div className="w-12 h-12 rounded-lg bg-[#E51717]/10 flex items-center justify-center mb-4">
-                <Zap className="h-6 w-6 text-[#E51717]" />
+            <div className="p-6 rounded-lg border bg-white dark:bg-neutral-800 hover-lift group">
+              <div className="w-12 h-12 rounded-lg bg-[#0066FF]/10 flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-[#0066FF]/20 group-hover:scale-110">
+                <Zap className="h-6 w-6 text-[#0066FF] dark:text-[#3D8BFF]" />
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
                 即座に使える実装ブループリント
@@ -194,9 +194,9 @@ export default async function DashboardPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-lg border bg-white dark:bg-neutral-800 hover-lift">
-              <div className="w-12 h-12 rounded-lg bg-[#E51717]/10 flex items-center justify-center mb-4">
-                <Target className="h-6 w-6 text-[#E51717]" />
+            <div className="p-6 rounded-lg border bg-white dark:bg-neutral-800 hover-lift group">
+              <div className="w-12 h-12 rounded-lg bg-[#0066FF]/10 flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-[#0066FF]/20 group-hover:scale-110">
+                <Target className="h-6 w-6 text-[#0066FF] dark:text-[#3D8BFF]" />
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
                 コンサル資料に使えるビジネス分析
@@ -207,9 +207,9 @@ export default async function DashboardPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-lg border bg-white dark:bg-neutral-800 hover-lift">
-              <div className="w-12 h-12 rounded-lg bg-[#E51717]/10 flex items-center justify-center mb-4">
-                <FileText className="h-6 w-6 text-[#E51717]" />
+            <div className="p-6 rounded-lg border bg-white dark:bg-neutral-800 hover-lift group">
+              <div className="w-12 h-12 rounded-lg bg-[#0066FF]/10 flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-[#0066FF]/20 group-hover:scale-110">
+                <FileText className="h-6 w-6 text-[#0066FF] dark:text-[#3D8BFF]" />
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
                 導入前チェックリストを自動生成
@@ -230,10 +230,10 @@ export default async function DashboardPage() {
             </h2>
             <Link
               href="/papers"
-              className="text-sm text-[#E51717] hover:text-[#cc1414] flex items-center gap-1 font-medium"
+              className="text-sm text-[#0066FF] dark:text-[#3D8BFF] hover:text-[#0052CC] dark:hover:text-[#0066FF] flex items-center gap-1 font-medium transition-colors group"
             >
               すべて見る
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
 

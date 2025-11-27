@@ -20,7 +20,7 @@ export function Header() {
       <div className="container mx-auto">
         <div className="flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#E51717] transition-transform group-hover:scale-105">
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#0066FF] transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-blue-500/50">
               <Sparkles className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -37,9 +37,9 @@ export function Header() {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all',
+                    'flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200',
                     isActive
-                      ? 'bg-[#E51717] text-white'
+                      ? 'bg-[#0066FF] text-white shadow-md shadow-blue-500/30'
                       : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-neutral-800'
                   )}
                 >
