@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import { PaperCard } from '@/components/features/paper-card';
 import { ComponentFilter } from '@/components/features/component-filter';
 import { Paper } from '@/lib/types';
-import { Search, BookOpen, Loader2, Filter } from 'lucide-react';
+import { Search, BookOpen, Loader2, Filter, ArrowUpDown, Calendar } from 'lucide-react';
+
+type SortOption = 'score' | 'date-desc' | 'date-asc';
 
 export default function PapersPage() {
   const [papers, setPapers] = useState<Paper[]>([]);
@@ -12,6 +14,7 @@ export default function PapersPage() {
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>('score');
 
   useEffect(() => {
     const doFetch = async () => {
@@ -33,15 +36,27 @@ export default function PapersPage() {
     doFetch();
   }, [selectedComponent]);
 
-  const filteredPapers = papers.filter((paper) => {
-    if (!searchQuery) return true;
-    const query = searchQuery.toLowerCase();
-    return (
-      paper.title.toLowerCase().includes(query) ||
-      paper.summary.toLowerCase().includes(query) ||
-      paper.authors.some((a) => a.toLowerCase().includes(query))
-    );
-  });
+  const filteredPapers = papers
+    .filter((paper) => {
+      if (!searchQuery) return true;
+      const query = searchQuery.toLowerCase();
+      return (
+        paper.title.toLowerCase().includes(query) ||
+        paper.summary.toLowerCase().includes(query) ||
+        paper.authors.some((a) => a.toLowerCase().includes(query))
+      );
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'date-desc':
+          return new Date(b.published).getTime() - new Date(a.published).getTime();
+        case 'date-asc':
+          return new Date(a.published).getTime() - new Date(b.published).getTime();
+        case 'score':
+        default:
+          return b.overallScore - a.overallScore;
+      }
+    });
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -65,6 +80,21 @@ export default function PapersPage() {
               className="w-full pl-12 pr-4 py-3 bg-white dark:bg-neutral-800 border rounded-lg text-neutral-900 dark:text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#0066FF] dark:focus:border-[#3D8BFF] focus:ring-2 focus:ring-[#0066FF]/20 dark:focus:ring-[#3D8BFF]/20 transition-all duration-200"
             />
           </div>
+
+          {/* ソート選択 */}
+          <div className="relative hidden sm:block">
+            <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500 pointer-events-none" />
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as SortOption)}
+              className="pl-10 pr-8 py-3 bg-white dark:bg-neutral-800 border rounded-lg text-neutral-900 dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-[#0066FF] dark:focus:border-[#3D8BFF] focus:ring-2 focus:ring-[#0066FF]/20 dark:focus:ring-[#3D8BFF]/20 transition-all duration-200"
+            >
+              <option value="score">スコア順</option>
+              <option value="date-desc">新しい順</option>
+              <option value="date-asc">古い順</option>
+            </select>
+          </div>
+
           <button
             onClick={() => setShowFilters(!showFilters)}
             className="flex items-center gap-2 px-4 py-3 bg-white dark:bg-neutral-800 border rounded-lg text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors md:hidden"

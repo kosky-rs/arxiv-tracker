@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { prisma } from '@/lib/db';
 import { StatsCard } from '@/components/features/stats-card';
 import { PaperCard } from '@/components/features/paper-card';
+import { RAGPipelineDiagram } from '@/components/features/rag-pipeline-diagram';
 import {
   BookOpen,
   ArrowRight,
@@ -73,12 +74,18 @@ async function getDashboardData() {
     const mostActiveComponent =
       componentCounts.sort((a, b) => b._count - a._count)[0]?.ragComponent || 'なし';
 
+    const componentCountsMap = componentCounts.reduce((acc, item) => {
+      acc[item.ragComponent] = item._count;
+      return acc;
+    }, {} as Record<string, number>);
+
     return {
       totalPapers,
       selectedPapers,
       recentPapers: recentPapers.map(transformPaper),
       mostActiveComponent,
       selectionRate: totalPapers > 0 ? Math.round((selectedPapers / totalPapers) * 100) : 0,
+      componentCountsMap,
     };
   } catch (error) {
     console.error('Dashboard data fetch error:', error);
@@ -88,6 +95,7 @@ async function getDashboardData() {
       recentPapers: [] as Paper[],
       mostActiveComponent: 'なし',
       selectionRate: 0,
+      componentCountsMap: {} as Record<string, number>,
     };
   }
 }
@@ -173,6 +181,11 @@ export default async function DashboardPage() {
               color="orange"
             />
           </div>
+        </section>
+
+        {/* RAG Pipeline Diagram */}
+        <section className="mb-16">
+          <RAGPipelineDiagram componentCounts={data.componentCountsMap} />
         </section>
 
         {/* Value Proposition */}

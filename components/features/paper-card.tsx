@@ -25,7 +25,7 @@ interface PaperCardProps {
 export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [copiedCode, setCopiedCode] = useState(false);
-  const [activeTab, setActiveTab] = useState<'blueprint' | 'business' | 'checklist'>('blueprint');
+  const [activeTab, setActiveTab] = useState<'blueprint' | 'business' | 'checklist'>('business');
 
   const componentInfo = getComponentInfo(paper.ragComponent);
 
@@ -155,8 +155,8 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
             {/* タブ */}
             <div className="flex border-b">
               {[
-                { id: 'blueprint', label: '実装ブループリント', icon: Zap },
                 { id: 'business', label: 'ビジネス分析', icon: Target },
+                { id: 'blueprint', label: '実装ブループリント', icon: Zap },
                 { id: 'checklist', label: 'チェックリスト', icon: CheckSquare },
               ].map(({ id, label, icon: Icon }) => (
                 <button
