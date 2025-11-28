@@ -157,7 +157,7 @@ export function PaperCard({ paper, defaultExpanded = false }: PaperCardProps) {
               {[
                 { id: 'business', label: 'ビジネス分析', icon: Target },
                 { id: 'blueprint', label: '実装ブループリント', icon: Zap },
-                { id: 'checklist', label: 'チェックリスト', icon: CheckSquare },
+                { id: 'checklist', label: '導入計画', icon: CheckSquare },
               ].map(({ id, label, icon: Icon }) => (
                 <button
                   key={id}
